@@ -9,6 +9,7 @@ import {
 import {connect} from 'react-redux';
 import {addTodo} from '../redux/actions';
 import ActionButtons from './ActionButton';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Add extends React.Component {
   constructor(props) {
@@ -20,8 +21,18 @@ class Add extends React.Component {
   }
 
   // add press
-  addPress = () => {
-    this.props.addTodo(this.state.text);
+  addPress = async () => {
+    const value = {id: Date.now(), title: this.state.text};
+    this.props.addTodo(value);
+    try {
+      console.log('value_Store', value);
+      const jsonvalue = JSON.stringify(value);
+      console.log('value store 1');
+      await AsyncStorage.setItem('todo_list_data', jsonvalue);
+      console.log('saving data success', jsonvalue);
+    } catch (error) {
+      console.log('saving data error');
+    }
     this.props.navigation.goBack();
   };
   // cancel press
@@ -40,7 +51,7 @@ class Add extends React.Component {
           <TextInput
             style={styles.title_textinput}
             placeholder="Input To Do"
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={text => this.setState({text})}
           />
         </View>
         <ActionButtons onAdd={this.addPress} onCancel={this.cancelPress} />
@@ -49,10 +60,10 @@ class Add extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     // dispatching plain actions
-    addTodo: (name) => dispatch(addTodo(name)),
+    addTodo: name => dispatch(addTodo(name)),
     // addTodo: () =>  dispatch({ type: 'INCREMENT' })
   };
 };

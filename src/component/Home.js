@@ -18,28 +18,59 @@ import {allData} from '../redux/actions';
 class Home extends React.Component {
   constructor(props) {
     super(props);
+
+    console.log("HOME PROPS",this.props);
+
+    // this.getData();
+    // this.getdata();
+
     this.state = {
-      data_get: [{id: '', title: ''}],
+      data_get: [],
     };
     console.log('props', this.props);
     console.log('home state', this.state);
   }
 
-  getData = async () => {
-    const jsonvalue = await AsyncStorage.getItem('data');
-    console.log('get data', JSON.parse(JSON.stringify(jsonvalue)));
-    const datas = JSON.parse(JSON.stringify(jsonvalue));
-    console.log('data', datas);
-    this.setState({data_get: datas});
-    // this.props.allData(this.state.data_get);
+  // getData = async () => {
+  //   const jsonvalue = await AsyncStorage.getItem('data');
+  //   console.log('get data', JSON.parse(JSON.stringify(jsonvalue)));
+  //   const datas = JSON.parse(JSON.stringify(jsonvalue));
+  //   console.log('data', datas);
+  //   this.setState({data_get: datas});
+  //   this.setState
+  //   // this.props.allData(this.state.data_get);
+  // };
+
+  // componentDidMount() {
+  //   this.getData();
+  // }
+
+  componentDidMount = async () => {
+    const jsonvalue = await AsyncStorage.getItem('todo_list_data');
+    console.log('get data', JSON.parse(jsonvalue));
+    const data = JSON.parse(jsonvalue);
+    // const data = JSON.parse(jsonvalue);
+    console.log('DATA', data);
+    // const type_app = await AsyncStorage.getItem('type_app');
+    // console.log('TYPE_APP', JSON.parse(type_app));
+
+    this.setState({data_get: [data]});
   };
 
-  componentDidMount() {
-    this.getData();
-  }
+  // getData = async () => {
+  //   try {
+  //     const jsonvalue = await AsyncStorage.getItem('todo_list_data');
+  //     console.log('JSON_VALUES: ', jsonvalue);
+  //     console.log('get data', JSON.parse(JSON.stringify(jsonvalue)));
+
+  //     return data;
+  //   } catch (e) {
+  //     console.log('read data error');
+  //   }
+  // };
 
   // render todoitem
-  renderItemn = (item) => {
+  renderItemn = item => {
     const data = this.props.todos;
     console.log('item render', item);
     return (
@@ -69,13 +100,13 @@ class Home extends React.Component {
     this.props.navigation.navigate('Add');
   };
   // press Edit
-  onEditPress = (item) => {
+  onEditPress = item => {
     const data = this.props.todos;
     this.props.navigation.navigate('Edit', {index: data.indexOf(item)});
   };
 
   //press Delete
-  onDeletePress = (item) => {
+  onDeletePress = item => {
     const data = this.props.todos;
     Alert.alert(
       'Remove ToDo',
@@ -100,14 +131,14 @@ class Home extends React.Component {
   render() {
     const data = this.props.todos;
     console.log('test home screen');
-    console.log('test_render:', this.props.todos);
+    console.log('test_render:', this.state.data_get.concat(data));
 
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollcontainer}>
           <FlatList
-            data={data}
-            keyExtractor={(item) => item.id.toString()}
+            data={this.state.data_get.concat(data)}
+            // keyExtractor={item => item.id.toString()}
             style={styles.flatlist}
             renderItem={({item}) => this.renderItemn(item)}
           />

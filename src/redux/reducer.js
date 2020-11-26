@@ -14,26 +14,22 @@ const getData = async () => {
   }
 };
 
-const storeData = async (value) => {
+const storeData = async value => {
   try {
-    console.log('value', value);
+    console.log('value_Store', value);
     const jsonvalue = JSON.stringify(value);
-    await AsyncStorage.setItem('data', jsonvalue);
+    await AsyncStorage.setItem('todo_list_data', jsonvalue);
     console.log('saving data success', jsonvalue);
   } catch (error) {
     console.log('saving data error');
   }
 };
 
+const data = getData();
+
 // State khởi tạo
 
-const initState = [
-  {id: Math.random(),title: 'Todo 1'},
-  {id: Math.random(),title: 'Todo 2'},
-  {id: Math.random(),title: 'Todo 3'},
-  {id: Math.random(),title: 'Todo 4'},
-  {id: Math.random(),title: 'Todo 5'},
-];
+const initState = [];
 
 // hàm reducer chỉ định State thay đổi khi  nhận vào các action
 
@@ -42,27 +38,27 @@ function todos(state = initState, action) {
   switch (action.type) {
     // action add_todo
     case ADD_TODO:
-      storeData([...state, action.data]);
+      // storeData([...state, action.data]);
       return [...state, action.data];
 
     // action edit_todo
     case EDIT_TODO:
       const index = action.index;
-      storeData([
-        ...state.slice(0, index),
-        action.data,
-        ...state.slice(index + 1),
-      ]);
+      // storeData([
+      //   ...state.slice(0, index),
+      //   action.data,
+      //   ...state.slice(index + 1),
+      // ]);
 
       return [...state.slice(0, index), action.data, ...state.slice(index + 1)];
 
     //all data
-    case ALL_DATA:
-      return;
-      action.data;
+    // case ALL_DATA:
+    //   return;
+    //   action.data;
 
     default:
-      storeData(state);
+      // storeData(state);
       return state;
   }
 }

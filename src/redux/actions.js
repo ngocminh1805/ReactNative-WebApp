@@ -4,13 +4,14 @@ export const ADD_TODO = 'ADD_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
 export const ALL_DATA = 'ALL_DATA';
 
-export function addTodo(text) {
+export function addTodo(data) {
   console.log('test_addTodo');
   return {
     type: ADD_TODO,
     data: {
-      id: Date.now(),
-      title: text,
+      // id: Date.now(),
+      id: data.id,
+      title: data.title,
     },
   };
 }

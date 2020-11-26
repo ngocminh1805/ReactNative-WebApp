@@ -16,52 +16,52 @@ export default class Images extends React.Component {
     super(props);
 
     this.state = {
-     
       images: [],
       page: 0,
       next_page: 1,
     };
   }
 
-
-
   // get api image
 
   getImage = async () => {
     this.setState({page: this.state.page + 1});
-    await fetch('https://picsum.photos/v2/list?page='+this.state.page.toString()+'&limit=50', {
-      method: 'GET',
-      //Request Type
-    })
-      .then((response) => response.json())
+    await fetch(
+      'https://picsum.photos/v2/list?page=' +
+        this.state.page.toString() +
+        '&limit=50',
+      {
+        method: 'GET',
+        //Request Type
+      },
+    )
+      .then(response => response.json())
       //If response is in json then in success
-      .then((responseJson) => {
+      .then(responseJson => {
         //Success
         // console.log('Image', responseJson);
         this.setState({images: this.state.images.concat(responseJson)});
       });
   };
 
-  
   // render Item with image api
-  renderItem = (item,index) => {
+  renderItem = (item, index) => {
     //   console.log('Url imagas',this.changeUrl(item.download_url, item.id));
     return (
       <View style={image_item.container}>
-        <Image source= {{uri:item.download_url}} style={image_item.images} />
+        <Image source={{uri: item.download_url}} style={image_item.images} />
       </View>
     );
   };
 
   // change api link to change size image load
 
-  changeUrl = (url,id) => {
-    const index = url.indexOf(id)
-    var str = url.slice(0,index)
-    str = str.concat(""+id+"/200")
+  changeUrl = (url, id) => {
+    const index = url.indexOf(id);
+    var str = url.slice(0, index);
+    str = str.concat('' + id + '/200');
     return str;
-
-  }
+  };
 
   // render screen
   render() {
@@ -70,11 +70,10 @@ export default class Images extends React.Component {
         <FlatList
           style={styles.flatlist}
           data={this.state.images}
-          renderItem={({item,index}) => this.renderItem(item,index)}
-          keyExtractor={(item) => {
+          renderItem={({item, index}) => this.renderItem(item, index)}
+          keyExtractor={item => {
             this.state.images.indexOf(item);
-          }}
-        ></FlatList>
+          }}></FlatList>
         <View style={styles.button_view}>
           <TouchableOpacity
             style={styles.getData_btn_container}
@@ -197,28 +196,24 @@ const image_item = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     marginBottom: 5,
-    padding:10
+    padding: 10,
   },
   des_container: {
     flex: 1,
   },
   images: {
     height: 300,
-    width: Dimensions.get("window").width - 45,
-    borderRadius:4
+    width: Dimensions.get('window').width - 45,
+    borderRadius: 4,
   },
-  images_title:{
-      fontSize:20,
-      fontWeight:"bold",
+  images_title: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  image_author:{
-      fontSize: 10,
-      color: "#53ba82",
-      marginBottom:20
+  image_author: {
+    fontSize: 10,
+    color: '#53ba82',
+    marginBottom: 20,
   },
-  images_url:{
-
-  }
-
-
+  images_url: {},
 });

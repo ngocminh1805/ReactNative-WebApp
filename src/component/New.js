@@ -34,9 +34,9 @@ export default class New extends React.Component {
         //Request Type
       },
     )
-      .then((response) => response.json())
+      .then(response => response.json())
       //If response is in json then in success
-      .then((responseJson) => {
+      .then(responseJson => {
         //Success
         if (responseJson.status == 'ok') {
           console.log('get data from api', responseJson);
@@ -60,13 +60,18 @@ export default class New extends React.Component {
 
   getImage = async () => {
     this.setState({page: this.state.page + 1});
-    await fetch('https://picsum.photos/v2/list?page='+this.state.page.toString()+'&limit=50', {
-      method: 'GET',
-      //Request Type
-    })
-      .then((response) => response.json())
+    await fetch(
+      'https://picsum.photos/v2/list?page=' +
+        this.state.page.toString() +
+        '&limit=50',
+      {
+        method: 'GET',
+        //Request Type
+      },
+    )
+      .then(response => response.json())
       //If response is in json then in success
-      .then((responseJson) => {
+      .then(responseJson => {
         //Success
         // console.log('Image', responseJson);
         this.setState({images: this.state.images.concat(responseJson)});
@@ -119,29 +124,31 @@ export default class New extends React.Component {
   // }
 
   // render Item with image api
-  renderItem = (item,index) => {
+  renderItem = (item, index) => {
     //   console.log('Url imagas',this.changeUrl(item.download_url, item.id));
     return (
       <View style={image_item.container}>
         <View style={image_item.des_container}>
-          <Text style = {image_item.images_title}>{index}</Text>
-          <Text style = {image_item.image_author}>{item.author}</Text>
+          <Text style={image_item.images_title}>{index}</Text>
+          <Text style={image_item.image_author}>{item.author}</Text>
           <Text>{item.url}</Text>
         </View>
-        <Image source= {{uri: this.changeUrl(item.download_url, item.id)}} style={image_item.images} />
+        <Image
+          source={{uri: this.changeUrl(item.download_url, item.id)}}
+          style={image_item.images}
+        />
       </View>
     );
   };
 
   // change api link to change size image load
 
-  changeUrl = (url,id) => {
-    const index = url.indexOf(id)
-    var str = url.slice(0,index)
-    str = str.concat(""+id+"/200")
+  changeUrl = (url, id) => {
+    const index = url.indexOf(id);
+    var str = url.slice(0, index);
+    str = str.concat('' + id + '/200');
     return str;
-
-  }
+  };
 
   // render screen
   render() {
@@ -151,11 +158,11 @@ export default class New extends React.Component {
         <FlatList
           style={styles.flatlist}
           data={this.state.images}
-          renderItem={({item,index}) => this.renderItem(item,index)}
-          keyExtractor={(item) => {
+          renderItem={({item, index}) => this.renderItem(item, index)}
+          keyExtractor={item => {
             this.state.articles.indexOf(item);
           }}
-          // --- Loadmore and pull to refesh ---   
+          // --- Loadmore and pull to refesh ---
 
           // onEndReachedThreshold={0.5}
           // onEndReached={() => this.handleLoadmore()}
@@ -286,7 +293,7 @@ const image_item = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     marginBottom: 5,
-    padding:10
+    padding: 10,
   },
   des_container: {
     flex: 1,
@@ -294,20 +301,16 @@ const image_item = StyleSheet.create({
   images: {
     height: 100,
     width: 100,
-    borderRadius:4
+    borderRadius: 4,
   },
-  images_title:{
-      fontSize:20,
-      fontWeight:"bold",
+  images_title: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  image_author:{
-      fontSize: 10,
-      color: "#53ba82",
-      marginBottom:20
+  image_author: {
+    fontSize: 10,
+    color: '#53ba82',
+    marginBottom: 20,
   },
-  images_url:{
-
-  }
-
-
+  images_url: {},
 });

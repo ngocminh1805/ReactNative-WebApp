@@ -1,9 +1,19 @@
 /**
  * @format
  */
+import React from 'react';
+import {AppRegistry} from 'react-native';
+import App from './src/App';
+import {name as appName} from './src/app.json';
+import AsyncStorage from '@react-native-community/async-storage';
 
-import { AppRegistry } from "react-native";
-import App from "./src/App";
-import { name as appName } from "./app.json";
+const  AppWrapper = (props) => {
+    return <App {...{
+      ...props,
+      type_app: "mobile",
+    }}/>;
+  };
 
-AppRegistry.registerComponent(appName, () => App);
+// AsyncStorage.setItem('type_app', 'mobile');
+AppRegistry.registerComponent(appName, () => AppWrapper);
+
