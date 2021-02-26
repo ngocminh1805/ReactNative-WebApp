@@ -19,7 +19,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log("HOME PROPS",this.props);
+    console.log('HOME PROPS', this.props);
 
     // this.getData();
     // this.getdata();

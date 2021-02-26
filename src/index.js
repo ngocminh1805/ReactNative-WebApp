@@ -3,7 +3,7 @@ import React from 'react';
 import {AppRegistry} from 'react-native';
 import './index.css';
 import App from './App';
-import AsyncStorage from '@react-native-community/async-storage';
+
 // import Images from './component/Images';
 // import HelloWorld from './component/HelloWorld';
 // import reportWebVitals from './reportWebVitals';

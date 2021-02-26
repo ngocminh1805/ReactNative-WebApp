@@ -6,12 +6,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TodoScreen from './component/TodoScreen';
 import ImagesScreen from './component/ImagesScreen';
+import ToDoIcon from './assets/to-do-list.png';
 
 export default class App extends React.Component {
-
-  constructor(props){
-    super(props)
-    console.log("APP PROPS", this.props);
+  constructor(props) {
+    super(props);
+    console.log('APP PROPS', this.props);
   }
   render() {
     const Tab = createBottomTabNavigator();
@@ -27,7 +27,8 @@ export default class App extends React.Component {
             options={{
               tabBarIcon: () => (
                 <Image
-                  source={require('./assets/to-do-list.png')}
+                  // source={require('./assets/to-do-list.png')}
+                  source={ToDoIcon}
                   resizeMode="contain"
                   style={{width: 20, height: 20}}
                 />
